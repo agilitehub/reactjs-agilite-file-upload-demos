@@ -1,0 +1,254 @@
+[
+  {
+      "id": "79165f2d.76cf4",
+      "type": "tab",
+      "label": "File Upload Demos",
+      "disabled": false,
+      "info": ""
+  },
+  {
+      "id": "6e71b761.38f018",
+      "type": "http in",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "url": "/uploadFileGridFS",
+      "method": "post",
+      "upload": false,
+      "swaggerDoc": "",
+      "x": 240,
+      "y": 80,
+      "wires": [
+          [
+              "96f6ea76.0615e8"
+          ]
+      ]
+  },
+  {
+      "id": "84d7efea.620c1",
+      "type": "http response",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "statusCode": "",
+      "headers": {},
+      "x": 1050,
+      "y": 80,
+      "wires": []
+  },
+  {
+      "id": "256f23ba.6d8c8c",
+      "type": "connectors",
+      "z": "79165f2d.76cf4",
+      "server": "cb91af1d.a47fe",
+      "profileKey": "gridfs",
+      "routeKey": "upload",
+      "fileName": "{{fileName}}",
+      "name": "GridFS: Upload File",
+      "field": "payload",
+      "fieldType": "msg",
+      "failFlow": true,
+      "payloadFile": false,
+      "x": 770,
+      "y": 80,
+      "wires": [
+          [
+              "671bf7fe.28f4d8"
+          ]
+      ]
+  },
+  {
+      "id": "96f6ea76.0615e8",
+      "type": "split",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "splt": "\\n",
+      "spltType": "str",
+      "arraySplt": 1,
+      "arraySpltType": "len",
+      "stream": false,
+      "addname": "",
+      "x": 430,
+      "y": 80,
+      "wires": [
+          [
+              "41280c87.ce8a24"
+          ]
+      ]
+  },
+  {
+      "id": "41280c87.ce8a24",
+      "type": "function",
+      "z": "79165f2d.76cf4",
+      "name": "Format File Data",
+      "func": "msg.fileName = msg.payload.fileName\nmsg.payload = Buffer.from(JSON.parse(msg.payload.fileData).data)\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "x": 580,
+      "y": 80,
+      "wires": [
+          [
+              "256f23ba.6d8c8c"
+          ]
+      ]
+  },
+  {
+      "id": "671bf7fe.28f4d8",
+      "type": "join",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "mode": "auto",
+      "build": "string",
+      "property": "payload",
+      "propertyType": "msg",
+      "key": "topic",
+      "joiner": "\\n",
+      "joinerType": "str",
+      "accumulate": "false",
+      "timeout": "",
+      "count": "",
+      "reduceRight": false,
+      "x": 930,
+      "y": 80,
+      "wires": [
+          [
+              "84d7efea.620c1"
+          ]
+      ]
+  },
+  {
+      "id": "d7fb7ca7.dbfc9",
+      "type": "comment",
+      "z": "79165f2d.76cf4",
+      "name": "GridFS - Multiple File Demo",
+      "info": "",
+      "x": 240,
+      "y": 40,
+      "wires": []
+  },
+  {
+      "id": "817999d.e23e968",
+      "type": "http in",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "url": "/uploadFileTemp",
+      "method": "post",
+      "upload": false,
+      "swaggerDoc": "",
+      "x": 230,
+      "y": 180,
+      "wires": [
+          [
+              "48295eb9.675d"
+          ]
+      ]
+  },
+  {
+      "id": "bf5b7507.9fd4e8",
+      "type": "comment",
+      "z": "79165f2d.76cf4",
+      "name": "Files - Multiple Temp File Demo",
+      "info": "",
+      "x": 250,
+      "y": 140,
+      "wires": []
+  },
+  {
+      "id": "8cfddbaf.bc0cc8",
+      "type": "http response",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "statusCode": "",
+      "headers": {},
+      "x": 1030,
+      "y": 180,
+      "wires": []
+  },
+  {
+      "id": "48295eb9.675d",
+      "type": "split",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "splt": "\\n",
+      "spltType": "str",
+      "arraySplt": 1,
+      "arraySpltType": "len",
+      "stream": false,
+      "addname": "",
+      "x": 410,
+      "y": 180,
+      "wires": [
+          [
+              "44aafaa.bd60204"
+          ]
+      ]
+  },
+  {
+      "id": "44aafaa.bd60204",
+      "type": "function",
+      "z": "79165f2d.76cf4",
+      "name": "Format File Data",
+      "func": "msg.fileName = msg.payload.fileName\nmsg.payload = Buffer.from(JSON.parse(msg.payload.fileData).data)\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "x": 560,
+      "y": 180,
+      "wires": [
+          [
+              "f639b99b.490d48"
+          ]
+      ]
+  },
+  {
+      "id": "38be5cea.825934",
+      "type": "join",
+      "z": "79165f2d.76cf4",
+      "name": "",
+      "mode": "auto",
+      "build": "string",
+      "property": "payload",
+      "propertyType": "msg",
+      "key": "topic",
+      "joiner": "\\n",
+      "joinerType": "str",
+      "accumulate": "false",
+      "timeout": "",
+      "count": "",
+      "reduceRight": false,
+      "x": 910,
+      "y": 180,
+      "wires": [
+          [
+              "8cfddbaf.bc0cc8"
+          ]
+      ]
+  },
+  {
+      "id": "f639b99b.490d48",
+      "type": "files",
+      "z": "79165f2d.76cf4",
+      "server": "cb91af1d.a47fe",
+      "actionType": "4",
+      "responseType": "arraybuffer",
+      "fileName": "{{fileName}}",
+      "contentType": "",
+      "recordId": "",
+      "name": "Files: Upload File",
+      "field": "payload",
+      "fieldType": "msg",
+      "failFlow": true,
+      "x": 750,
+      "y": 180,
+      "wires": [
+          [
+              "38be5cea.825934"
+          ]
+      ]
+  },
+  {
+      "id": "cb91af1d.a47fe",
+      "type": "agilite-login",
+      "z": "",
+      "serverType": "2",
+      "server": "http://localhost:6010",
+      "name": "Testing"
+  }
+]
